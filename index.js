@@ -49,6 +49,7 @@ const selectAnswer = function () {
    else {
     gameOver();
     $(document).one("keypress", startGame);
+    $(document).one("tap", startGame);
   }
 
   if (number === amountOfQuestion) {
@@ -83,5 +84,6 @@ let number = 0;
 let level = 1;
 
 $(document).one("keypress", startGame);
+$(document).one("tap", startGame);
 $(".btn").on("click", clickAnimation);
 $(".btn").on("click", selectAnswer);
