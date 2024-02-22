@@ -1,3 +1,7 @@
+// Target Elements
+const gameHeadingEl = document.querySelector("h1");
+const gameBtnsContainer = document.querySelector(".game-arena");
+
 const startGame = function (event) {
   event.stopImmediatePropagation();
   $("h1").text("Level 1");
