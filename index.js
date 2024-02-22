@@ -22,30 +22,12 @@ const gameOver = function () {
   amountOfQuestion = undefined;
 };
 
-const patternGenerator = function () {
-  const colorList = ["red-id", "yellow-id", "green-id", "blue-id"];
-  const randomIndex = Math.floor(Math.random() * 4);
-  const pickedColor = colorList[randomIndex];
-  memory.push(pickedColor);
-  amountOfQuestion = memory.length;
-  $(`#${pickedColor}`).addClass("selectedkey");
-  setTimeout(function () {
-    $(`#${pickedColor}`).removeClass("selectedkey");
-  }, 150);
-  makeSound(pickedColor);
-};
-
 const clickAnimation = function () {
   const selectedButton = $(this);
   selectedButton.addClass("pressedkey");
   setTimeout(function () {
     selectedButton.removeClass("pressedkey");
   }, 70);
-};
-
-const changeLevel = function () {
-  level++;
-  $("h1").text(`Level ${level}`);
 };
 
 const selectAnswer = function () {
@@ -91,8 +73,3 @@ let memory = [];
 let amountOfQuestion;
 let number = 0;
 let level = 1;
-
-$(document).one("keypress", startGame);
-$(document).one("tap", startGame);
-$(".btn").on("click", clickAnimation);
-$(".btn").on("click", selectAnswer);
