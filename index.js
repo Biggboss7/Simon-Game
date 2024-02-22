@@ -9,7 +9,9 @@ const gameOver = function () {
   audio.play();
   $("h1").text("Game Over, Press Any Key to Restart");
   $("body").addClass("gameover");
-  setTimeout(function () {$("body").removeClass("gameover")}, 100);
+  setTimeout(function () {
+    $("body").removeClass("gameover");
+  }, 100);
   memory = [];
   number = 0;
   level = 1;
@@ -18,19 +20,23 @@ const gameOver = function () {
 
 const patternGenerator = function () {
   const colorList = ["red-id", "yellow-id", "green-id", "blue-id"];
-  const randomIndex = Math.floor(Math.random()*4);
+  const randomIndex = Math.floor(Math.random() * 4);
   const pickedColor = colorList[randomIndex];
   memory.push(pickedColor);
-  amountOfQuestion = memory.length
+  amountOfQuestion = memory.length;
   $(`#${pickedColor}`).addClass("selectedkey");
-  setTimeout(function () {$(`#${pickedColor}`).removeClass("selectedkey")}, 150);
+  setTimeout(function () {
+    $(`#${pickedColor}`).removeClass("selectedkey");
+  }, 150);
   makeSound(pickedColor);
 };
 
 const clickAnimation = function () {
   const selectedButton = $(this);
   selectedButton.addClass("pressedkey");
-  setTimeout(function () {selectedButton.removeClass("pressedkey")}, 70);
+  setTimeout(function () {
+    selectedButton.removeClass("pressedkey");
+  }, 70);
 };
 
 const changeLevel = function () {
@@ -45,8 +51,7 @@ const selectAnswer = function () {
 
   if (answer === memory[number]) {
     number++;
-  }
-   else {
+  } else {
     gameOver();
     $(document).one("keypress", startGame);
     $(document).one("tap", startGame);
@@ -56,25 +61,25 @@ const selectAnswer = function () {
     number = 0;
     setTimeout(patternGenerator, 500);
     setTimeout(changeLevel, 500);
-  };
+  }
 };
 
 const makeSound = function (key) {
   let audio;
   switch (key) {
-    case "red-id" :
+    case "red-id":
       audio = new Audio("sounds/red.mp3");
       break;
-    case "blue-id" :
+    case "blue-id":
       audio = new Audio("sounds/blue.mp3");
       break;
-    case "yellow-id" :
+    case "yellow-id":
       audio = new Audio("sounds/yellow.mp3");
       break;
-    case "green-id" :
+    case "green-id":
       audio = new Audio("sounds/green.mp3");
       break;
-  };
+  }
   audio.play();
 };
 
