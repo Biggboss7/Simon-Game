@@ -1,3 +1,5 @@
+"use strict";
+
 // Target Elements
 const gameHeadingEl = document.querySelector("h1");
 const gameBtnsContainer = document.querySelector(".game-arena");
@@ -11,27 +13,30 @@ const simonGame = {
   _colorList: ["red", "yellow", "green", "blue"],
   _cpuMemory: [],
 
-  _changeLevel() {
-    this._level++;
+  _renderLevel() {
     gameHeadingEl.textContent = `Level ${this._level}`;
   },
-  _patternGenerator() {
+
+  _renderPattern() {
+    this._cpuMemory.forEach(color => {
+      const btnColorEl = document.getElementById(`${color}-id`);
+
+      btnColorEl.classList.add("selectedkey");
+      setTimeout(() => btnColorEl.classList.remove("selectedkey"), 150);
+    });
+  },
+
+  _generatePattern() {
     const color = this._colorList[randomIndex()];
     this._cpuMemory.push(color);
-
-    const btnColorEl = document.getElementById(`${color}-id`);
-
-    btnColorEl.classList.add("selectedkey");
-    setTimeout(function () {
-      btnColorEl.classList.remove("selectedkey");
-    }, 150);
-
-    // makeSound(pickedColor);
   },
 
   _proceedNextLevel() {
-    this._changeLevel();
-    this._patternGenerator();
+    this._level++;
+    this._renderLevel();
+
+    this._generatePattern();
+    this._renderPattern();
   },
 
   init() {
@@ -40,6 +45,8 @@ const simonGame = {
     });
   },
 };
+
+simonGame.init();
 
 const startGame = function (event) {
   event.stopImmediatePropagation();
