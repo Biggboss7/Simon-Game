@@ -6,6 +6,41 @@ const bodyEl = document.body;
 // Helper Function
 const randomIndex = () => Math.floor(Math.random() * 4);
 
+const simonGame = {
+  _level: 0,
+  _colorList: ["red", "yellow", "green", "blue"],
+  _cpuMemory: [],
+
+  _changeLevel() {
+    this._level++;
+    gameHeadingEl.textContent = `Level ${this._level}`;
+  },
+  _patternGenerator() {
+    const color = this._colorList[randomIndex()];
+    this._cpuMemory.push(color);
+
+    const btnColorEl = document.getElementById(`${color}-id`);
+
+    btnColorEl.classList.add("selectedkey");
+    setTimeout(function () {
+      btnColorEl.classList.remove("selectedkey");
+    }, 150);
+
+    // makeSound(pickedColor);
+  },
+
+  _proceedNextLevel() {
+    this._changeLevel();
+    this._patternGenerator();
+  },
+
+  init() {
+    window.addEventListener("keydown", this._proceedNextLevel.bind(this), {
+      once: true,
+    });
+  },
+};
+
 const startGame = function (event) {
   event.stopImmediatePropagation();
   $("h1").text("Level 1");
