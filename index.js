@@ -8,6 +8,16 @@ const bodyEl = document.body;
 // Helper Function
 const randomIndex = () => Math.floor(Math.random() * 4);
 
+const clickAnimation = function (e) {
+  const selectedButton = e.target.closest("button");
+  if (!selectedButton) return;
+
+  selectedButton.classList.add("pressedkey");
+  setTimeout(function () {
+    selectedButton.classList.remove("pressedkey");
+  }, 70);
+};
+
 const simonGame = {
   _level: 0,
   _colorList: ["red", "yellow", "green", "blue"],
@@ -43,6 +53,8 @@ const simonGame = {
     window.addEventListener("keydown", this._proceedNextLevel.bind(this), {
       once: true,
     });
+
+    gameBtnsContainer.addEventListener("click", clickAnimation);
   },
 };
 
@@ -66,14 +78,6 @@ const gameOver = function () {
   number = 0;
   level = 1;
   amountOfQuestion = undefined;
-};
-
-const clickAnimation = function () {
-  const selectedButton = $(this);
-  selectedButton.addClass("pressedkey");
-  setTimeout(function () {
-    selectedButton.removeClass("pressedkey");
-  }, 70);
 };
 
 const selectAnswer = function () {
