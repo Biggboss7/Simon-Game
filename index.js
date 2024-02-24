@@ -21,15 +21,12 @@ const implementSoundEffect = function (btnEl) {
   audio.play();
 };
 
-const clickAnimation = function (e) {
-  const selectedButton = e.target.closest("button");
-  if (!selectedButton) return;
-
-  selectedButton.classList.add("pressedkey");
-  implementSoundEffect(selectedButton);
+const clickAnimation = function (btnEl) {
+  btnEl.classList.add("pressedkey");
+  implementSoundEffect(btnEl);
 
   setTimeout(function () {
-    selectedButton.classList.remove("pressedkey");
+    btnEl.classList.remove("pressedkey");
   }, 70);
 };
 
@@ -46,6 +43,7 @@ const simonGame = {
   _level: 0,
   _colorList: ["red", "yellow", "green", "blue"],
   _cpuMemory: [],
+  _question: 0,
 
   _renderLevel() {
     gameHeadingEl.textContent = `Level ${this._level}`;
@@ -73,12 +71,33 @@ const simonGame = {
 
     this._generatePattern();
     this._renderPattern();
+
+    this._question = 0;
+  },
+
+  _validatePlayerAnswer(btnEl) {
+    const answer = btnEl.id.slice(0, -3);
+
+    if (this._cpuMemory[this._question] !== answer) alert("Game Over");
+
+    this._question++;
+    if (!this._cpuMemory[this._question]) this.proceedNextLevel();
   },
 
   init() {
     window.addEventListener("keydown", handleSpaceKeyDown);
 
-    gameBtnsContainer.addEventListener("click", clickAnimation);
+    gameBtnsContainer.addEventListener(
+      "click",
+      function (e) {
+        const selectedButton = e.target.closest("button");
+        if (!selectedButton) return;
+
+        clickAnimation(selectedButton);
+
+        this._validatePlayerAnswer(selectedButton);
+      }.bind(this)
+    );
   },
 };
 
