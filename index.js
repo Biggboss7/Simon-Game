@@ -6,7 +6,10 @@ const gameBtnsContainer = document.querySelector(".game-arena");
 const bodyEl = document.body;
 
 // Configuration
-const keyStart = "Space";
+const startKey = "Space";
+
+const nextLvlPause = 500; // 0.5s
+
 const soundFilePath = "./sounds/";
 const soundFileExt = ".mp3";
 
@@ -31,7 +34,7 @@ const clickAnimation = function (btnEl) {
 };
 
 const handleSpaceKeyDown = function (e) {
-  if (e.code !== keyStart) return;
+  if (e.code !== startKey) return;
 
   simonGame.proceedNextLevel();
 
@@ -49,15 +52,14 @@ const simonGame = {
     gameHeadingEl.textContent = `Level ${this._level}`;
   },
 
-  _renderPattern() {
-    this._cpuMemory.forEach(color => {
-      const btnColorEl = document.getElementById(`${color}-id`);
+  _renderLastPattern() {
+    const lastColor = this._cpuMemory.at(-1);
+    const lastBtnEl = document.getElementById(`${lastColor}-id`);
 
-      btnColorEl.classList.add("selectedkey");
-      implementSoundEffect(btnColorEl);
+    lastBtnEl.classList.add("selectedkey");
+    implementSoundEffect(lastBtnEl);
 
-      setTimeout(() => btnColorEl.classList.remove("selectedkey"), 150);
-    });
+    setTimeout(() => lastBtnEl.classList.remove("selectedkey"), 150);
   },
 
   _generatePattern() {
@@ -70,7 +72,7 @@ const simonGame = {
     this._renderLevel();
 
     this._generatePattern();
-    this._renderPattern();
+    this._renderLastPattern();
 
     this._question = 0;
   },
@@ -81,7 +83,8 @@ const simonGame = {
     if (this._cpuMemory[this._question] !== answer) alert("Game Over");
 
     this._question++;
-    if (!this._cpuMemory[this._question]) this.proceedNextLevel();
+    if (!this._cpuMemory[this._question])
+      setTimeout(this.proceedNextLevel.bind(this), nextLvlPause);
   },
 
   init() {
