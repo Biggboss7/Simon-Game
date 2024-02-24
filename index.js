@@ -14,17 +14,19 @@ const soundFilePath = "./sounds/";
 const soundFileExt = ".mp3";
 
 // Helper Function
-const randomIndex = () => Math.floor(Math.random() * 4);
+const randomIndex = totalIndex => Math.floor(Math.random() * totalIndex);
 
 const implementSoundEffect = function (btnEl) {
   const audio = new Audio(
-    `${soundFilePath}${btnEl.id.slice(0, -3)}${soundFileExt}`
+    `${soundFilePath}${
+      !bodyEl.classList.contains("gameover") ? btnEl.id.slice(0, -3) : "wrong"
+    }${soundFileExt}`
   );
 
   audio.play();
 };
 
-const clickAnimation = function (btnEl) {
+const btnClickAnimation = function (btnEl) {
   btnEl.classList.add("pressedkey");
   implementSoundEffect(btnEl);
 
@@ -48,8 +50,8 @@ const simonGame = {
   _cpuMemory: [],
   _question: 0,
 
-  _renderLevel() {
-    gameHeadingEl.textContent = `Level ${this._level}`;
+  _renderHeadingContent(message) {
+    gameHeadingEl.innerHTML = message;
   },
 
   _renderLastPattern() {
@@ -63,13 +65,13 @@ const simonGame = {
   },
 
   _generatePattern() {
-    const color = this._colorList[randomIndex()];
+    const color = this._colorList[randomIndex(this._colorList.length)];
     this._cpuMemory.push(color);
   },
 
   proceedNextLevel() {
     this._level++;
-    this._renderLevel();
+    this._renderHeadingContent(`Level ${this._level}`);
 
     this._generatePattern();
     this._renderLastPattern();
@@ -80,14 +82,35 @@ const simonGame = {
   _validatePlayerAnswer(btnEl) {
     const answer = btnEl.id.slice(0, -3);
 
-    if (this._cpuMemory[this._question] !== answer) alert("Game Over");
+    if (this._cpuMemory[this._question] !== answer) {
+      this._gameOver();
+    } else {
+      this._question++;
+      if (!this._cpuMemory[this._question])
+        setTimeout(this.proceedNextLevel.bind(this), nextLvlPause);
+    }
+  },
 
-    this._question++;
-    if (!this._cpuMemory[this._question])
-      setTimeout(this.proceedNextLevel.bind(this), nextLvlPause);
+  _resetGame() {
+    this._cpuMemory = [];
+    this._level = 0;
+  },
+
+  _gameOver() {
+    bodyEl.classList.add("gameover");
+
+    setTimeout(function () {
+      bodyEl.classList.remove("gameover");
+    }, 70);
+
+    this._renderHeadingContent(`Game Over !!`);
+
+    this._resetGame();
   },
 
   init() {
+    this._renderHeadingContent("Press 'Space' to Start");
+
     window.addEventListener("keydown", handleSpaceKeyDown);
 
     gameBtnsContainer.addEventListener(
@@ -96,57 +119,12 @@ const simonGame = {
         const selectedButton = e.target.closest("button");
         if (!selectedButton) return;
 
-        clickAnimation(selectedButton);
-
         this._validatePlayerAnswer(selectedButton);
+
+        btnClickAnimation(selectedButton);
       }.bind(this)
     );
   },
 };
 
 simonGame.init();
-
-const startGame = function (event) {
-  event.stopImmediatePropagation();
-  $("h1").text("Level 1");
-  patternGenerator();
-};
-
-const gameOver = function () {
-  let audio = new Audio("sounds/wrong.mp3");
-  audio.play();
-  $("h1").text("Game Over, Press Any Key to Restart");
-  $("body").addClass("gameover");
-  setTimeout(function () {
-    $("body").removeClass("gameover");
-  }, 100);
-  memory = [];
-  number = 0;
-  level = 1;
-  amountOfQuestion = undefined;
-};
-
-const selectAnswer = function () {
-  const selectedButton = $(this);
-  makeSound(selectedButton.attr("id"));
-  let answer = selectedButton.attr("id");
-
-  if (answer === memory[number]) {
-    number++;
-  } else {
-    gameOver();
-    $(document).one("keypress", startGame);
-    $(document).one("tap", startGame);
-  }
-
-  if (number === amountOfQuestion) {
-    number = 0;
-    setTimeout(patternGenerator, 500);
-    setTimeout(changeLevel, 500);
-  }
-};
-
-let memory = [];
-let amountOfQuestion;
-let number = 0;
-let level = 1;
