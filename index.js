@@ -5,6 +5,10 @@ const gameHeadingEl = document.querySelector("h1");
 const gameBtnsContainer = document.querySelector(".game-arena");
 const bodyEl = document.body;
 
+// Configuration
+const soundFilePath = "./sounds/";
+const soundFileExt = ".mp3";
+
 // Helper Function
 const randomIndex = () => Math.floor(Math.random() * 4);
 
