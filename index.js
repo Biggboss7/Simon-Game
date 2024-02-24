@@ -18,6 +18,10 @@ const soundFileExt = ".mp3";
 // Helper Function
 const randomIndex = totalIndex => Math.floor(Math.random() * totalIndex);
 
+const renderContent = (el, content) => {
+  el.innerHTML = content;
+};
+
 const implementSoundEffect = function (btnEl) {
   const audio = new Audio(
     `${soundFilePath}${
