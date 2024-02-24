@@ -9,8 +9,10 @@ const bodyEl = document.body;
 const startKey = "Space";
 
 const nextLvlPause = 500; // 0.5s
+const beepEffectPause = 100; // 0.1s
 
 const soundFilePath = "./sounds/";
+const gameOverSoundPath = "wrong";
 const soundFileExt = ".mp3";
 
 // Helper Function
@@ -19,20 +21,27 @@ const randomIndex = totalIndex => Math.floor(Math.random() * totalIndex);
 const implementSoundEffect = function (btnEl) {
   const audio = new Audio(
     `${soundFilePath}${
-      !bodyEl.classList.contains("gameover") ? btnEl.id.slice(0, -3) : "wrong"
+      !bodyEl.classList.contains("gameover")
+        ? btnEl.id.slice(0, -3)
+        : gameOverSoundPath
     }${soundFileExt}`
   );
 
   audio.play();
 };
 
-const btnClickAnimation = function (btnEl) {
-  btnEl.classList.add("pressedkey");
-  implementSoundEffect(btnEl);
+const beepEffect = function (el, className, pause = beepEffectPause) {
+  el.classList.add(className);
 
   setTimeout(function () {
-    btnEl.classList.remove("pressedkey");
-  }, 70);
+    el.classList.remove(className);
+  }, pause);
+};
+
+const btnClickAnimation = function (btnEl) {
+  implementSoundEffect(btnEl);
+
+  beepEffect(btnEl, "pressedkey");
 };
 
 const handleSpaceKeyDown = function (e) {
@@ -58,10 +67,9 @@ const simonGame = {
     const lastColor = this._cpuMemory.at(-1);
     const lastBtnEl = document.getElementById(`${lastColor}-id`);
 
-    lastBtnEl.classList.add("selectedkey");
     implementSoundEffect(lastBtnEl);
 
-    setTimeout(() => lastBtnEl.classList.remove("selectedkey"), 150);
+    beepEffect(lastBtnEl, "selectedkey");
   },
 
   _generatePattern() {
@@ -97,11 +105,7 @@ const simonGame = {
   },
 
   _gameOver() {
-    bodyEl.classList.add("gameover");
-
-    setTimeout(function () {
-      bodyEl.classList.remove("gameover");
-    }, 70);
+    beepEffect(bodyEl, "gameover");
 
     this._renderHeadingContent(`Game Over !!`);
 
