@@ -6,6 +6,7 @@ const gameBtnsContainer = document.querySelector(".game-arena");
 const bodyEl = document.body;
 
 // Configuration
+const keyStart = "Space";
 const soundFilePath = "./sounds/";
 const soundFileExt = ".mp3";
 
@@ -32,6 +33,15 @@ const clickAnimation = function (e) {
   }, 70);
 };
 
+const handleSpaceKeyDown = function (e) {
+  if (e.code !== keyStart) return;
+
+  simonGame.proceedNextLevel();
+
+  window.removeEventListener("keydown", handleSpaceKeyDown);
+};
+
+// Simon Game Apps
 const simonGame = {
   _level: 0,
   _colorList: ["red", "yellow", "green", "blue"],
@@ -57,7 +67,7 @@ const simonGame = {
     this._cpuMemory.push(color);
   },
 
-  _proceedNextLevel() {
+  proceedNextLevel() {
     this._level++;
     this._renderLevel();
 
@@ -66,9 +76,7 @@ const simonGame = {
   },
 
   init() {
-    window.addEventListener("keydown", this._proceedNextLevel.bind(this), {
-      once: true,
-    });
+    window.addEventListener("keydown", handleSpaceKeyDown);
 
     gameBtnsContainer.addEventListener("click", clickAnimation);
   },
