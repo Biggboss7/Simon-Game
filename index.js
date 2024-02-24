@@ -12,11 +12,21 @@ const soundFileExt = ".mp3";
 // Helper Function
 const randomIndex = () => Math.floor(Math.random() * 4);
 
+const implementSoundEffect = function (btnEl) {
+  const audio = new Audio(
+    `${soundFilePath}${btnEl.id.slice(0, -3)}${soundFileExt}`
+  );
+
+  audio.play();
+};
+
 const clickAnimation = function (e) {
   const selectedButton = e.target.closest("button");
   if (!selectedButton) return;
 
   selectedButton.classList.add("pressedkey");
+  implementSoundEffect(selectedButton);
+
   setTimeout(function () {
     selectedButton.classList.remove("pressedkey");
   }, 70);
@@ -36,6 +46,8 @@ const simonGame = {
       const btnColorEl = document.getElementById(`${color}-id`);
 
       btnColorEl.classList.add("selectedkey");
+      implementSoundEffect(btnColorEl);
+
       setTimeout(() => btnColorEl.classList.remove("selectedkey"), 150);
     });
   },
@@ -102,25 +114,6 @@ const selectAnswer = function () {
     setTimeout(patternGenerator, 500);
     setTimeout(changeLevel, 500);
   }
-};
-
-const makeSound = function (key) {
-  let audio;
-  switch (key) {
-    case "red-id":
-      audio = new Audio("sounds/red.mp3");
-      break;
-    case "blue-id":
-      audio = new Audio("sounds/blue.mp3");
-      break;
-    case "yellow-id":
-      audio = new Audio("sounds/yellow.mp3");
-      break;
-    case "green-id":
-      audio = new Audio("sounds/green.mp3");
-      break;
-  }
-  audio.play();
 };
 
 let memory = [];
