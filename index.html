@@ -21,12 +21,28 @@
   </head>
 
   <body>
-    <h1>Press "Space" to Start</h1>
-    <section class="game-arena">
-      <button id="green-id" class="btn green"></button>
-      <button id="red-id" class="btn red"></button>
-      <button id="yellow-id" class="btn yellow"></button>
-      <button id="blue-id" class="btn blue"></button>
-    </section>
+    <div class="overlay hidden">
+      <p class="big--heading">
+        Congratulations 🎺🎺!
+        <br /><br />
+        Your Highscore is:
+        <br /><br />
+        <span id="highscore"></span>
+      </p>
+    </div>
+    <div class="game--container">
+      <h1 class="big--heading">Press "Space" to Start</h1>
+
+      <div class="current--score__container">
+        Score: <span class="current--score">0</span>
+      </div>
+
+      <section class="game-arena">
+        <button id="green-id" class="btn green"></button>
+        <button id="red-id" class="btn red"></button>
+        <button id="yellow-id" class="btn yellow"></button>
+        <button id="blue-id" class="btn blue"></button>
+      </section>
+    </div>
   </body>
 </html>
