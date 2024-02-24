@@ -3,8 +3,10 @@
 // Target Elements
 const gameHeadingEl = document.querySelector("h1");
 const gameBtnsContainer = document.querySelector(".game-arena");
-const currentScoreEl = document.querySelector(".current--score");
 const bodyEl = document.body;
+
+const currentScoreEl = document.querySelector(".current--score");
+const highScoreEl = document.querySelector(".high--score");
 
 // Configuration
 const startKey = "Space";
@@ -64,6 +66,7 @@ const simonGame = {
   _cpuMemory: [],
   _question: 0,
   _currentScore: 0,
+  _highScore: 0,
 
   _renderLastPattern() {
     const lastColor = this._cpuMemory.at(-1);
@@ -81,6 +84,15 @@ const simonGame = {
 
   _addScore() {
     this._currentScore += 5;
+  },
+
+  _setHighScore() {
+    if (this._currentScore <= this._highScore) return;
+
+    this._highScore = this._currentScore;
+    localStorage.setItem("highScore", this._highScore);
+
+    renderContent(highScoreEl, this._highScore);
   },
 
   proceedNextLevel() {
@@ -113,9 +125,12 @@ const simonGame = {
   _resetGame() {
     this._cpuMemory = [];
     this._level = 0;
+    this._currentScore = 0;
   },
 
   _gameOver() {
+    this._setHighScore();
+
     beepEffect(bodyEl, "gameover");
 
     renderContent(gameHeadingEl, `Game Over !!`);

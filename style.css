@@ -38,7 +38,8 @@ body {
   grid-template-rows: repeat(2, 1fr);
 }
 
-.current--score__container {
+.current--score__container,
+.current--highscore__container {
   margin-bottom: 1rem;
   font-size: 1.5rem;
   color: var(--cream);
