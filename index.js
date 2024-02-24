@@ -3,6 +3,7 @@
 // Target Elements
 const gameHeadingEl = document.querySelector("h1");
 const gameBtnsContainer = document.querySelector(".game-arena");
+const currentScoreEl = document.querySelector(".current--score");
 const bodyEl = document.body;
 
 // Configuration
@@ -62,10 +63,7 @@ const simonGame = {
   _colorList: ["red", "yellow", "green", "blue"],
   _cpuMemory: [],
   _question: 0,
-
-  _renderHeadingContent(message) {
-    gameHeadingEl.innerHTML = message;
-  },
+  _currentScore: 0,
 
   _renderLastPattern() {
     const lastColor = this._cpuMemory.at(-1);
@@ -81,9 +79,13 @@ const simonGame = {
     this._cpuMemory.push(color);
   },
 
+  _addScore() {
+    this._currentScore += 5;
+  },
+
   proceedNextLevel() {
     this._level++;
-    this._renderHeadingContent(`Level ${this._level}`);
+    renderContent(gameHeadingEl, `Level ${this._level}`);
 
     this._generatePattern();
     this._renderLastPattern();
@@ -97,6 +99,9 @@ const simonGame = {
     if (this._cpuMemory[this._question] !== answer) {
       this._gameOver();
     } else {
+      this._addScore();
+      renderContent(currentScoreEl, this._currentScore);
+
       this._question++;
 
       // Check Remaining Question. If no, then go to next level
@@ -113,13 +118,13 @@ const simonGame = {
   _gameOver() {
     beepEffect(bodyEl, "gameover");
 
-    this._renderHeadingContent(`Game Over !!`);
+    renderContent(gameHeadingEl, `Game Over !!`);
 
     this._resetGame();
   },
 
   init() {
-    this._renderHeadingContent("Press 'Space' to Start");
+    renderContent(gameHeadingEl, "Press 'Space' to Start");
 
     window.addEventListener("keydown", handleSpaceKeyDown);
 
