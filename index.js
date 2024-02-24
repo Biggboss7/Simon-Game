@@ -94,6 +94,8 @@ const simonGame = {
       this._gameOver();
     } else {
       this._question++;
+
+      // Check Remaining Question. If no, then go to next level
       if (!this._cpuMemory[this._question])
         setTimeout(this.proceedNextLevel.bind(this), nextLvlPause);
     }
