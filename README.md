@@ -8,11 +8,11 @@ As a player, you need to remember each button which have been picked by the comp
 This game is the re-creation from the course which I took "The Complete 2024 Web Development Bootcamp by Angela Yu".
 It was originally created using jQuery Library. Since jQuery is not really used anymore for nowadays, I decided to recreate this game using vanilla Javascript.
 
-## What I Learn
+### What I Learn
 
 What I Learn From Refactoring SIMON GAME:
 
-- {touch-action: manipulation}
+- {touch-action: manipulation}d
 
   This chunk of CSS code helps prevents Zoom-In effects for every "Double-Tap" in touch screen device.
 
@@ -37,19 +37,19 @@ What I Learn From Refactoring SIMON GAME:
 
 - Closures in "for" loop
 
-## Screenshot
+### Screenshot
 
 - Desktop Preview /
-  ![desktop-preview](./desktoppreview.png)
+  ![desktop-preview](./desktop--preview.png)
 
 - Mobile Preview /
-  ![mobile-preview](./mobilepreview.png)
+  ![mobile-preview](./mobile--preview.png)
 
-## Links
+### Links
 
 - Solution URL: [solution](https://github.com/Biggboss7/Simon-Game)
-- Live Site URL: [live site](https://willowy-creponne-34c2b8.netlify.app)
+- Live Site URL: [live site](https://simon-game-bigboss.netlify.app/)
 
-## Author
+### Author
 
 - Github - (https://github.com/Biggboss7/)
