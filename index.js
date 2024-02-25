@@ -22,6 +22,8 @@ const soundFileExt = ".mp3";
 
 const storageID = "highScore"; // ID of Local Storage Key to preserve High Score
 
+const tabletHPViewWidth = 900;
+
 // Helper Function
 const randomIndex = totalIndex => Math.floor(Math.random() * totalIndex);
 
@@ -63,6 +65,14 @@ const handleSpaceKeyDown = function (e) {
   setTimeout(simonGame.proceedNextLevel.bind(simonGame), nextStagePause);
 
   window.removeEventListener("keydown", handleSpaceKeyDown);
+};
+
+const handleTap = function () {
+  simonGame.startGame();
+
+  setTimeout(simonGame.proceedNextLevel.bind(simonGame), nextStagePause);
+
+  window.removeEventListener("click", handleTap);
 };
 
 // Simon Game Apps
@@ -185,7 +195,11 @@ const simonGame = {
   },
 
   init() {
-    window.addEventListener("keydown", handleSpaceKeyDown);
+    // Checking for User's Viewport
+    if (window.innerWidth <= tabletHPViewWidth) {
+      window.addEventListener("click", handleTap);
+      renderContent(gameHeadingEl, "Tap to Start");
+    } else window.addEventListener("keydown", handleSpaceKeyDown);
 
     // Preserve previous High Score
     this._highScore = +localStorage.getItem(storageID) || 0;
