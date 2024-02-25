@@ -107,8 +107,6 @@ const simonGame = {
   startGame() {
     renderContent(gameHeadingEl, `Level ${this._level}`);
 
-    // gameBtnsContainer.classList.remove("hidden");
-
     gameBtnsContainer.addEventListener(
       "click",
       function (e) {
@@ -182,7 +180,6 @@ const simonGame = {
     renderContent(gameHeadingEl, `Game Over !!`);
 
     setTimeout(() => {
-      // gameBtnsContainer.classList.add("hidden");
       btnOk.classList.remove("hidden");
     }, nextStagePause);
 
