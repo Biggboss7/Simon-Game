@@ -22,7 +22,7 @@ const soundFileExt = ".mp3";
 
 const storageID = "highScore"; // ID of Local Storage Key to preserve High Score
 
-const tabletHPViewWidth = 900;
+const tabletHPViewWidth = 1000;
 
 // Helper Function
 const randomIndex = totalIndex => Math.floor(Math.random() * totalIndex);

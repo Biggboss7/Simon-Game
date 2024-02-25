@@ -16,6 +16,7 @@ html {
 
 body {
   min-height: 100vh;
+  min-width: 375px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,6 +28,7 @@ body {
   font-size: 3rem;
   color: var(--cream);
   text-align: center;
+  line-height: 2;
 }
 
 .game--container {
@@ -112,28 +114,41 @@ body {
 }
 
 @media only screen and (max-width: 900px) {
-  h1 {
+  .big--heading {
     font-size: 2rem;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  body {
-    display: block;
+  .big--heading {
+    font-size: 1.5rem;
+    margin: 1rem 0;
   }
 
-  h1 {
-    font-size: 1.5rem;
+  .current--score__container,
+  .current--highscore__container {
+    font-size: 1rem;
+  }
+
+  .current--highscore__container {
+    margin-bottom: 3rem;
   }
 
   .game-arena {
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 0%;
     grid-gap: 20px;
   }
 
   .btn {
-    width: 150px;
-    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
+  }
+}
+
+@media only screen and (max-width: 478px) {
+  .game-arena {
+    width: 100%;
+    height: 100%;
   }
 }
