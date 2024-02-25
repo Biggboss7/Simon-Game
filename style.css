@@ -57,7 +57,7 @@ body {
   height: 250px;
   justify-self: center;
   align-self: center;
-  border: 10px solid;
+  border: 10px solid black;
   border-radius: 50px;
   cursor: pointer;
 }
