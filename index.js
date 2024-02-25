@@ -15,7 +15,7 @@ const startKey = "Space";
 
 const nextStagePause = 500; // 0.5s
 const beepEffectPause = 150; // 0.1s
-const renderPatternPause = 200; // 0.2s
+const renderPatternPause = 500; // 0.2s
 
 const storageID = "highScore"; // ID of Local Storage Key to preserve High Score
 
@@ -58,7 +58,10 @@ const handleSpaceKeyDown = function (e) {
   window.removeEventListener("keydown", handleSpaceKeyDown);
 };
 
-const handleTap = function () {
+const handleTap = function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
   simonGame.startGame();
 
   setTimeout(simonGame.proceedNextLevel.bind(simonGame), nextStagePause);
