@@ -8,7 +8,7 @@ const bodyEl = document.body;
 const currentScoreEl = document.querySelector(".current--score");
 const highScoreEl = document.querySelector(".high--score");
 
-const btnOk = document.querySelector(".btn--ok");
+const btnOk = document.querySelector(".btn--ok"); // Button to Restart
 
 // Configuration
 const startKey = "Space";
@@ -19,6 +19,8 @@ const beepEffectPause = 150; // 0.1s
 const soundFilePath = "./sounds/";
 const gameOverSoundPath = "wrong";
 const soundFileExt = ".mp3";
+
+const storageID = "highScore"; // ID of Local Storage Key to preserve High Score
 
 // Helper Function
 const randomIndex = totalIndex => Math.floor(Math.random() * totalIndex);
@@ -31,7 +33,7 @@ const implementSoundEffect = function (btnEl) {
   const audio = new Audio(
     `${soundFilePath}${
       !bodyEl.classList.contains("gameover")
-        ? btnEl.id.slice(0, -3)
+        ? btnEl.id.slice(0, -3) // this function is to exclude the STRING "-id" from btnEl.id
         : gameOverSoundPath
     }${soundFileExt}`
   );
@@ -93,7 +95,7 @@ const simonGame = {
     if (this._currentScore <= this._highScore) return;
 
     this._highScore = this._currentScore;
-    localStorage.setItem("highScore", this._highScore);
+    localStorage.setItem(storageID, this._highScore);
 
     renderContent(highScoreEl, this._highScore);
   },
@@ -185,7 +187,8 @@ const simonGame = {
   init() {
     window.addEventListener("keydown", handleSpaceKeyDown);
 
-    this._highScore = +localStorage.getItem("highScore") || 0;
+    // Preserve previous High Score
+    this._highScore = +localStorage.getItem(storageID) || 0;
     renderContent(highScoreEl, this._highScore);
   },
 };
