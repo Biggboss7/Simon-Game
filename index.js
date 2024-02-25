@@ -8,11 +8,13 @@ const bodyEl = document.body;
 const currentScoreEl = document.querySelector(".current--score");
 const highScoreEl = document.querySelector(".high--score");
 
+const btnOk = document.querySelector(".btn--ok");
+
 // Configuration
 const startKey = "Space";
 
-const nextLvlPause = 500; // 0.5s
-const beepEffectPause = 100; // 0.1s
+const nextStagePause = 500; // 0.5s
+const beepEffectPause = 150; // 0.1s
 
 const soundFilePath = "./sounds/";
 const gameOverSoundPath = "wrong";
@@ -54,7 +56,9 @@ const btnClickAnimation = function (btnEl) {
 const handleSpaceKeyDown = function (e) {
   if (e.code !== startKey) return;
 
-  simonGame.proceedNextLevel();
+  simonGame.startGame();
+
+  setTimeout(simonGame.proceedNextLevel.bind(simonGame), nextStagePause);
 
   window.removeEventListener("keydown", handleSpaceKeyDown);
 };
@@ -66,7 +70,6 @@ const simonGame = {
   _cpuMemory: [],
   _question: 0,
   _currentScore: 0,
-  _highScore: 0,
 
   _renderLastPattern() {
     const lastColor = this._cpuMemory.at(-1);
@@ -95,6 +98,34 @@ const simonGame = {
     renderContent(highScoreEl, this._highScore);
   },
 
+  startGame() {
+    renderContent(gameHeadingEl, `Level ${this._level}`);
+
+    gameBtnsContainer.classList.remove("hidden");
+
+    gameBtnsContainer.addEventListener(
+      "click",
+      function (e) {
+        // This Function is used to stop MULTIPLE SAME EVENT to be triggered (CHECK ON MDN DOC)
+        e.stopImmediatePropagation();
+
+        const selectedButton = e.target.closest("button");
+        if (!selectedButton) return;
+
+        this._validatePlayerAnswer(selectedButton);
+
+        btnClickAnimation(selectedButton);
+      }.bind(this)
+    );
+  },
+
+  _restartGame() {
+    this._resetGameData();
+    this._resetGameView();
+
+    this.init();
+  },
+
   proceedNextLevel() {
     this._level++;
     renderContent(gameHeadingEl, `Level ${this._level}`);
@@ -118,14 +149,22 @@ const simonGame = {
 
       // Check Remaining Question. If no, then go to next level
       if (!this._cpuMemory[this._question])
-        setTimeout(this.proceedNextLevel.bind(this), nextLvlPause);
+        setTimeout(this.proceedNextLevel.bind(this), nextStagePause);
     }
   },
 
-  _resetGame() {
+  _resetGameData() {
     this._cpuMemory = [];
     this._level = 0;
     this._currentScore = 0;
+  },
+
+  _resetGameView() {
+    renderContent(gameHeadingEl, "Press 'Space' to Start");
+
+    renderContent(currentScoreEl, this._currentScore);
+
+    btnOk.classList.add("hidden");
   },
 
   _gameOver() {
@@ -135,25 +174,19 @@ const simonGame = {
 
     renderContent(gameHeadingEl, `Game Over !!`);
 
-    this._resetGame();
+    setTimeout(() => {
+      gameBtnsContainer.classList.add("hidden");
+      btnOk.classList.remove("hidden");
+    }, nextStagePause);
+
+    btnOk.addEventListener("click", this._restartGame.bind(this));
   },
 
   init() {
-    renderContent(gameHeadingEl, "Press 'Space' to Start");
-
     window.addEventListener("keydown", handleSpaceKeyDown);
 
-    gameBtnsContainer.addEventListener(
-      "click",
-      function (e) {
-        const selectedButton = e.target.closest("button");
-        if (!selectedButton) return;
-
-        this._validatePlayerAnswer(selectedButton);
-
-        btnClickAnimation(selectedButton);
-      }.bind(this)
-    );
+    this._highScore = +localStorage.getItem("highScore") || 0;
+    renderContent(highScoreEl, this._highScore);
   },
 };
 

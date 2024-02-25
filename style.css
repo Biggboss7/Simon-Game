@@ -29,6 +29,10 @@ body {
   text-align: center;
 }
 
+.game--container {
+  text-align: center;
+}
+
 .game-arena {
   width: 600px;
   height: 600px;
@@ -54,6 +58,24 @@ body {
   border: 10px solid;
   border-radius: 50px;
   cursor: pointer;
+}
+
+.btn--ok {
+  width: 250px;
+  height: 50px;
+  margin: 2rem auto;
+  border: 1px solid var(--cream);
+  border-radius: 0.5rem;
+  font-family: inherit;
+  color: var(--cream);
+  background-color: transparent;
+  transition: background 200ms;
+  cursor: pointer;
+}
+
+.btn--ok:hover {
+  background-color: white;
+  color: inherit;
 }
 
 .red {
