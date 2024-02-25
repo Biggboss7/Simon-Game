@@ -1,4 +1,4 @@
-"use strict";
+import soundObject from "./sound.js";
 
 // Target Elements
 const gameHeadingEl = document.querySelector("h1");
@@ -15,10 +15,7 @@ const startKey = "Space";
 
 const nextStagePause = 500; // 0.5s
 const beepEffectPause = 150; // 0.1s
-
-const soundFilePath = "./sounds/";
-const gameOverSoundPath = "wrong";
-const soundFileExt = ".mp3";
+const renderPatternPause = 200; // 0.2s
 
 const storageID = "highScore"; // ID of Local Storage Key to preserve High Score
 
@@ -32,13 +29,7 @@ const renderContent = (el, content) => {
 };
 
 const implementSoundEffect = function (btnEl) {
-  const audio = new Audio(
-    `${soundFilePath}${
-      !bodyEl.classList.contains("gameover")
-        ? btnEl.id.slice(0, -3) // this function is to exclude the STRING "-id" from btnEl.id
-        : gameOverSoundPath
-    }${soundFileExt}`
-  );
+  const audio = soundObject[btnEl?.id.slice(0, -3) || "wrong"];
 
   audio.play();
 };
@@ -143,7 +134,8 @@ const simonGame = {
     renderContent(gameHeadingEl, `Level ${this._level}`);
 
     this._generatePattern();
-    this._renderLastPattern();
+
+    setTimeout(this._renderLastPattern.bind(this), renderPatternPause);
 
     this._question = 0;
   },
@@ -190,6 +182,8 @@ const simonGame = {
       gameBtnsContainer.classList.add("hidden");
       btnOk.classList.remove("hidden");
     }, nextStagePause);
+
+    implementSoundEffect();
 
     btnOk.addEventListener("click", this._restartGame.bind(this));
   },

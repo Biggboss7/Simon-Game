@@ -60,6 +60,7 @@ body {
   border: 10px solid black;
   border-radius: 50px;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .btn--ok {
