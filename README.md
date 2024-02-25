@@ -37,6 +37,15 @@ What I Learn From Refactoring SIMON GAME:
 
 - Closures in "for" loop
 
+### What to Improve
+
+This game is still far from perfection. There are some aspects that still need to be improve, such as:
+
+- Audio played by clicking the buttons will delay if we pressed it many times at once
+- Tapping Event on window cannot trigger event on Safari
+- Features to introduce the game
+- improvement on UI/UX
+
 ### Screenshot
 
 - Desktop Preview /
