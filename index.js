@@ -31,6 +31,8 @@ const renderContent = (el, content) => {
 const implementSoundEffect = function (btnEl) {
   const audio = soundObject[btnEl?.id.slice(0, -3) || "wrong"];
 
+  // REPLAY sound by reset audio.currentTime to 0
+  audio.currentTime = 0;
   audio.play();
 };
 
@@ -72,7 +74,7 @@ const handleTap = function (e) {
 // Simon Game Apps
 const simonGame = {
   _level: 0,
-  _colorList: ["red", "yellow", "green", "blue"],
+  _colorList: ["red"],
   _cpuMemory: [],
   _question: 0,
   _currentScore: 0,
