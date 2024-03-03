@@ -4,11 +4,13 @@ import soundObject from "./sound.js";
 const gameHeadingEl = document.querySelector("h1");
 const gameBtnsContainer = document.querySelector(".game-arena");
 const bodyEl = document.body;
+const overlayEl = document.querySelector(".overlay");
 
 const currentScoreEl = document.querySelector(".current--score");
 const highScoreEl = document.querySelector(".high--score");
 
 const btnOk = document.querySelector(".btn--ok"); // Button to Restart
+const btnReady = document.querySelector(".btn--ready");
 
 // Configuration
 const startKey = "Space";
@@ -203,4 +205,9 @@ const simonGame = {
   },
 };
 
-simonGame.init();
+btnReady.addEventListener("click", function (e) {
+  e.stopPropagation();
+
+  overlayEl.classList.add("hidden");
+  simonGame.init();
+});

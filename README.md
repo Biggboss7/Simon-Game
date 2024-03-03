@@ -1,6 +1,6 @@
 # Simon Game
 
-A fun mini game to test your memorize skill. Game consists of 4 button. In each stage, computer will randomly picked a button.
+A fun mini game to test your memorize skill. Game consists of 4 buttons. In each stage, computer will randomly picked a button.
 As a player, you need to remember each button which have been picked by the computer in all stage in order to win this game.
 
 ## Overview
@@ -12,7 +12,7 @@ It was originally created using jQuery Library. Since jQuery is not really used 
 
 What I Learn From Refactoring SIMON GAME:
 
-- {touch-action: manipulation}d
+- {touch-action: manipulation}
 
   This chunk of CSS code helps prevents Zoom-In effects for every "Double-Tap" in touch screen device.
 
@@ -36,6 +36,10 @@ What I Learn From Refactoring SIMON GAME:
   It allows me to put an expression in square brackets ([]), which will be computed and used as the property name.
 
 - Closures in "for" loop
+
+- replay object Audio using "audio.currentTime = 0", it helps to prevent Audio from being paused for multiple press at once.
+
+- dvw unit, for dynamic viewport including menubar and toolbar
 
 ### What to Improve
 
