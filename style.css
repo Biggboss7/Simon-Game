@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   min-width: 375px;
   display: flex;
   flex-direction: column;
@@ -36,8 +36,8 @@ body {
 }
 
 .game-arena {
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -53,8 +53,8 @@ body {
 }
 
 .btn {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   justify-self: center;
   align-self: center;
   border: 10px solid black;
