@@ -32,8 +32,8 @@ const implementSoundEffect = function (btnEl) {
   const audio = soundObject[btnEl?.id.slice(0, -3) || "wrong"];
 
   // REPLAY sound by reset audio.currentTime to 0
-  audio.currentTime = 0;
   audio.play();
+  audio.currentTime = 0;
 };
 
 const beepEffect = function (el, className, pause = beepEffectPause) {
