@@ -74,7 +74,7 @@ const handleTap = function (e) {
 // Simon Game Apps
 const simonGame = {
   _level: 0,
-  _colorList: ["red"],
+  _colorList: ["red", "blue", "yellow", "green"],
   _cpuMemory: [],
   _question: 0,
   _currentScore: 0,
