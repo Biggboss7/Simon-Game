@@ -66,7 +66,7 @@ const handleTap = function (e) {
 
   setTimeout(simonGame.proceedNextLevel.bind(simonGame), nextStagePause);
 
-  window.removeEventListener("click", handleTap);
+  bodyEl.removeEventListener("click", handleTap);
 };
 
 // Simon Game Apps
@@ -191,7 +191,7 @@ const simonGame = {
   init() {
     // Checking for User's Viewport
     if (window.innerWidth <= tabletHPViewWidth) {
-      window.addEventListener("click", handleTap);
+      bodyEl.addEventListener("click", handleTap);
       renderContent(gameHeadingEl, "Tap to Start");
     } else window.addEventListener("keydown", handleSpaceKeyDown);
 
